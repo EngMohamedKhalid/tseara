@@ -79,6 +79,8 @@ class AppImages{
   static const String user="${imagesBase}user.png";
   static const String book="${imagesBase}book.jpg";
   static const String started="${imagesBase}started.png";
+  static const String Google="${imagesBase}Google.png";
+  static const String back="${imagesBase}back.png";
 
 
 

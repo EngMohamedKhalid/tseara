@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2),(){
+    Future.delayed(Duration(seconds: 1),(){
       navigateTo(GetStartedScreen(),removeAll: true);
     });
   }
@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return ImageWidget(
       imageUrl: AppImages.splash,
+      fit: BoxFit.fill,
       width: double.infinity.w,
       height: double.infinity.h,
     );

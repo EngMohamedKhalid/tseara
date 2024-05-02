@@ -2,107 +2,162 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../app/utils/app_assets.dart';
-import '../../../../app/utils/app_colors.dart';
-import '../../../../app/widgets/button_widget.dart';
-import '../../../../app/widgets/custom_form_field.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/otp_screen.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/register_screen.dart';
+import '../../../../../app/utils/app_assets.dart';
+import '../../../../../app/utils/app_colors.dart';
+import '../../../../../app/utils/helper.dart';
+import '../../../../../app/widgets/button_widget.dart';
+import '../../../../../app/widgets/custom_form_field.dart';
+import '../../../../../app/widgets/image_widget.dart';
+import '../../../../../app/widgets/text_button_widget.dart';
+import '../../../../../app/widgets/text_widget.dart';
+import '../../../../app/utils/app_fonts.dart';
 import '../../../../app/widgets/default_app_bar_widget.dart';
-import '../../../../app/widgets/image_widget.dart';
-import '../../../../app/widgets/text_widget.dart';
 import '../presentation_logic_holder/auth_cubit.dart';
+import 'forget_password_screen.dart';
+import 'login_screen.dart';
 
-class ResetPasswordScreen extends StatefulWidget {
-  const ResetPasswordScreen({super.key});
+class ResetPasswordScreen extends StatelessWidget {
+  ResetPasswordScreen({super.key});
 
-  @override
-  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
-}
-
-class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBarWidget( notify: false,),
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          var cubit = AuthCubit.get();
-          return Form(
-            key: formKey,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 29.sp,),
-              children: [
-                70.verticalSpace,
-                Row(
-                  children: [
-                    TextWidget(
-                      title: "ResetPassword".tr(),
-                      titleSize: 24.sp,
-                      titleColor: AppColors.mainColor,
-                      titleFontWeight: FontWeight.w400,
-                    ),
+        body: Stack(
+          children: [
+            Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: const AssetImage(
+                        AppImages.back,
+                      ),
+                    )
+                )
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: AlignmentDirectional.topCenter,
+                  end: AlignmentDirectional.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.4),
+                    Colors.black.withOpacity(.5),
+                    Colors.black.withOpacity(.9),
                   ],
                 ),
-                40.verticalSpace,
-                CustomFormField(
-                  hint: "EnterOTP".tr(),
-                  controller: cubit.otpController,
-                  keyboardType: TextInputType.number,
-                  maxLength:4,
-                  validator:(value) {
-                    if (value!.isEmpty) {
-                      return "FieldMustNotBeEmpty".tr();
-                    }else if(value.length<4){
-                      return "OtpMustBe4Digits".tr();
-                    }
-                    return null;
-                  },
-                ),
-                16.verticalSpace,
-                CustomFormField(
-                  hint: "enterNewPassword".tr(),
-                  controller: cubit.resetPassController,
-                  suffixIcon:cubit.passObscure==false?Icons.visibility:Icons.visibility_off,
-                  obscure:cubit.passObscure,
-                  iconPressed: () {
-                    cubit.changeVisible();
-                  },
-                ),
-                16.verticalSpace,
-                CustomFormField(
-                  hint: "enterNewPasswordCon".tr(),
-                  controller: cubit.resetPassConfirmController,
-                  suffixIcon:
-                  cubit.passConfObscure==false?Icons.visibility:Icons.visibility_off,
-                  obscure:cubit.passConfObscure,
-                  iconPressed: () {
-                    cubit.changeConfVisible();
-                  },
-                ),
-                100.verticalSpace,
-                ButtonWidget(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      // cubit.resetPassword(
-                      //     ResetPassUseCaseParams(
-                      //       email: cubit.otpEmailController.text,
-                      //       otp: cubit.otpController.text,
-                      //       password: cubit.resetPassController.text,
-                      //       password_confirmation:cubit.resetPassConfirmController.text,
-                      //     )
-                      // );
-                    }
-                  },
-                  loading: state is LoadingState,
-                  text: "Reset Password",
-                ),
-                16.verticalSpace,
-              ],
+              ),
+              child: BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  var cu = AuthCubit.get();
+                  return Form(
+                    key: formKey,
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(horizontal: 50.sp, ),
+                      children: [
+                        50.verticalSpace,
+                        ImageWidget(
+                          imageUrl: AppImages.appLogo,
+                          width: 150.w,
+                          height: 100.h,
+                        ),
+                        15.verticalSpace,
+                        TextWidget(
+                          title: "اهلا بك في تسعيره ",
+                          titleFontWeight: FontWeight.normal,
+                          titleSize: 22.sp,
+                          titleColor: AppColors.white,
+                        ),
+                        50.verticalSpace,
+                        TextWidget(
+                          title: "forget password",
+                          titleFontWeight: FontWeight.bold,
+                          titleSize: 30.sp,
+                          titleColor: AppColors.white,
+                        ),
+                        60.verticalSpace,
+                        CustomFormField(
+                          hint: "Password".tr(),
+                          controller: cu.loginPasswordController,
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
+                          hint: "Confirm Password".tr(),
+                          controller: cu.loginPasswordController,
+                        ),
+                        30.verticalSpace,
+                        ButtonWidget(
+                          loading: state is LoadingState,
+                          outlined: true,
+                          onPressed: () {
+                            navigateTo(OtpScreen());
+                            // if(formKey.currentState!.validate()){
+                            //   //cu.login();
+                            // }
+                          },
+                          text: "تغيير كلمة السر".tr(),
+                        ),
+                        20.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextButton(
+                              onPressed: () {
+                                navigateTo(const LoginScreen());
+                              },
+                              title: "تسجيل الدخول",
+                              titleColor: AppColors.blue,
+                              fontFamily: AppFonts.semiBold,
+                              titleFontWeight: AppFonts.semiBold500,
+                              titleSize: 14.sp,
+                            ),
+                            TextWidget(
+                              title: "العوده اللي تسجيل الدخول؟",
+                              titleSize: 15.sp,
+                              titleColor: AppColors.white,
+                              titleFontWeight: FontWeight.w500,
+                            ),
+                            //5.horizontalSpace,
+                          ],
+                        ),
+                        20.verticalSpace,
+                        ButtonWidget(
+                          loading: state is LoadingState,
+                          outlined: true,
+                          color: AppColors.white,
+                          textColor: AppColors.black,
+                          icon: ImageWidget(
+                            imageUrl: AppImages.Google,
+                            width: 30.w,
+                            height: 30.h,
+                          ),
+                          onPressed: () {
+                            //navigateTo(BNBScreen(),removeAll: true);
+                            // if(formKey.currentState!.validate()){
+                            //   //cu.login();
+                            // }
+                          },
+                          text: "تسجيل الدخول ب جوجل".tr(),
+                        ),
+                        130.verticalSpace,
+                        TextWidget(
+                          title: "جميع الحقوق محفوظه -جامعة الزقازيق كلية الحاسبات والمعلومات 2023",
+                          titleSize: 15.sp,
+                          titleColor: AppColors.white,
+                          titleFontWeight: FontWeight.w500,
+                        ),
+                        20.verticalSpace,
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          );
-        },
-      ),
+          ],
+        )
     );
   }
 }

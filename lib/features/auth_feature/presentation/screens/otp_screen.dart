@@ -1,70 +1,161 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import '../../../../../app/utils/app_assets.dart';
-// import '../../../../../app/utils/app_colors.dart';
-// import '../../../../../app/utils/helper.dart';
-// import '../../../../../app/widgets/button_widget.dart';
-// import '../../../../../app/widgets/custom_form_field.dart';
-// import '../../../../../app/widgets/image_widget.dart';
-// import '../../../../../app/widgets/text_button_widget.dart';
-// import '../../../../../app/widgets/text_widget.dart';
-// import '../../../../app/widgets/default_app_bar_widget.dart';
-// import '../presentation_logic_holder/auth_cubit.dart';
-// import 'login_screen.dart';
-//
-// class OtpScreen extends StatefulWidget {
-//   const OtpScreen({super.key});
-//
-//   @override
-//   State<OtpScreen> createState() => _OtpScreenState();
-// }
-//
-// class _OtpScreenState extends State<OtpScreen> {
-// final formKey = GlobalKey<FormState>();
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: const DefaultAppBarWidget(
-//         canBack: false,
-//       ),
-//       body: BlocBuilder<AuthCubit, AuthState>(
-//         builder: (context, state) {
-//           var cubit = AuthCubit.get();
-//           return Form(
-//             key: formKey,
-//             child: ListView(
-//               padding: EdgeInsets.symmetric(horizontal: 21.sp, vertical: 50),
-//               children: [
-//                 ImageWidget(
-//                   imageUrl: AppImages.spots,
-//                   width: 75.w,
-//                   height: 75.h,
-//                 ),
-//                 16.verticalSpace,
-//                 TextWidget(
-//                   title: "Forget Password?",
-//                   titleSize: 24.sp,
-//                   titleColor: AppColors.mainColor,
-//                   titleFontWeight: FontWeight.w400,
-//                 ),
-//                 323.verticalSpace,
-//                 ButtonWidget(
-//                   onPressed: () {
-//                     // if (formKey.currentState!.validate()) {
-//                     //   //navigateTo(const ResetPasswordScreen());
-//                     // }
-//
-//                   },
-//                   text: "Verify OTP",
-//                 ),
-//                 57.verticalSpace,
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/login_screen.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/register_screen.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/reset_password_screen.dart';
+import '../../../../../app/utils/app_assets.dart';
+import '../../../../../app/utils/app_colors.dart';
+import '../../../../../app/utils/helper.dart';
+import '../../../../../app/widgets/button_widget.dart';
+import '../../../../../app/widgets/custom_form_field.dart';
+import '../../../../../app/widgets/image_widget.dart';
+import '../../../../../app/widgets/text_button_widget.dart';
+import '../../../../../app/widgets/text_widget.dart';
+import '../../../../app/utils/app_fonts.dart';
+import '../../../../app/widgets/default_app_bar_widget.dart';
+import '../presentation_logic_holder/auth_cubit.dart';
+import 'forget_password_screen.dart';
+
+class OtpScreen extends StatelessWidget {
+  OtpScreen({super.key});
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Stack(
+          children: [
+            Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      fit: BoxFit.fill,
+                      image: const AssetImage(
+                        AppImages.back,
+                      ),
+                    )
+                )
+            ),
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: AlignmentDirectional.topCenter,
+                  end: AlignmentDirectional.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.4),
+                    Colors.black.withOpacity(.5),
+                    Colors.black.withOpacity(.9),
+                  ],
+                ),
+              ),
+              child: BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  var cu = AuthCubit.get();
+                  return Form(
+                    key: formKey,
+                    child: ListView(
+                      padding: EdgeInsets.symmetric(horizontal: 50.sp, ),
+                      children: [
+                        50.verticalSpace,
+                        ImageWidget(
+                          imageUrl: AppImages.appLogo,
+                          width: 150.w,
+                          height: 100.h,
+                        ),
+                        15.verticalSpace,
+                        TextWidget(
+                          title: "اهلا بك في تسعيره ",
+                          titleFontWeight: FontWeight.normal,
+                          titleSize: 22.sp,
+                          titleColor: AppColors.white,
+                        ),
+                        50.verticalSpace,
+                        TextWidget(
+                          title: "forget password",
+                          titleFontWeight: FontWeight.bold,
+                          titleSize: 30.sp,
+                          titleColor: AppColors.white,
+                        ),
+                        60.verticalSpace,
+                        CustomFormField(
+                          hint: "*** *** *** ".tr(),
+                          controller: cu.loginEmailController,
+                          keyboardType: TextInputType.emailAddress,
+                          errorText:  cu.errorMsg,
+                        ),
+                        30.verticalSpace,
+                        ButtonWidget(
+                          loading: state is LoadingState,
+                          outlined: true,
+                          onPressed: () {
+                            navigateTo(ResetPasswordScreen());
+                            //navigateTo(BNBScreen(),removeAll: true);
+                            // if(formKey.currentState!.validate()){
+                            //   //cu.login();
+                            // }
+                          },
+                          text: "التحقق".tr(),
+                        ),
+                        20.verticalSpace,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextButton(
+                              onPressed: () {
+                                navigateTo(const LoginScreen());
+                              },
+                              title: "تسجيل الدخول",
+                              titleColor: AppColors.blue,
+                              fontFamily: AppFonts.semiBold,
+                              titleFontWeight: AppFonts.semiBold500,
+                              titleSize: 14.sp,
+                            ),
+                            TextWidget(
+                              title: "العوده اللي تسجيل الدخول؟",
+                              titleSize: 15.sp,
+                              titleColor: AppColors.white,
+                              titleFontWeight: FontWeight.w500,
+                            ),
+                            //5.horizontalSpace,
+                          ],
+                        ),
+                        20.verticalSpace,
+                        ButtonWidget(
+                          loading: state is LoadingState,
+                          outlined: true,
+                          color: AppColors.white,
+                          textColor: AppColors.black,
+                          icon: ImageWidget(
+                            imageUrl: AppImages.Google,
+                            width: 30.w,
+                            height: 30.h,
+                          ),
+                          onPressed: () {
+                            //navigateTo(BNBScreen(),removeAll: true);
+                            // if(formKey.currentState!.validate()){
+                            //   //cu.login();
+                            // }
+                          },
+                          text: "تسجيل الدخول ب جوجل".tr(),
+                        ),
+                        130.verticalSpace,
+                        TextWidget(
+                          title: "جميع الحقوق محفوظه -جامعة الزقازيق كلية الحاسبات والمعلومات 2023",
+                          titleSize: 15.sp,
+                          titleColor: AppColors.white,
+                          titleFontWeight: FontWeight.w500,
+                        ),
+                        20.verticalSpace,
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        )
+    );
+  }
+}

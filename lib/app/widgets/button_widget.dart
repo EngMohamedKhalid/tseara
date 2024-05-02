@@ -14,7 +14,7 @@ class ButtonWidget extends StatelessWidget {
     this.width=double.infinity, this.height ,this.decoration ,
     this.textColor,this.loading =false,this.child ,
     this.horizontalPadding=0,this.verticalPadding=0,
-    this.outlined=true, this.align,this.fontFamily, this.horizontalMargin= 0,  this.verticalMargin=0, this.mainAxisAlignment, this.fontWeight,
+    this.outlined=false, this.align,this.fontFamily, this.horizontalMargin= 0,  this.verticalMargin=0, this.mainAxisAlignment, this.fontWeight, this.borderColor,
   });
   final String? text ;
   final Function()? onPressed ;
@@ -25,6 +25,7 @@ class ButtonWidget extends StatelessWidget {
   final Color? textColor ;
   final bool loading ;
   final Color? color ;
+  final Color? borderColor ;
   final Border? border ;
   final TextAlign? align ;
   final Widget? icon ;
@@ -59,7 +60,7 @@ class ButtonWidget extends StatelessWidget {
           decoration: decoration ?? BoxDecoration(
               color: color ??AppColors.mainColor ,
               borderRadius:borderRadiusObject ??BorderRadius.circular(borderRadius ?? 20),
-              border: outlined?Border.all(color:color ??AppColors.white,):border
+              border: outlined?Border.all(color:borderColor ??AppColors.black,width: 1.5):border
           ),
           child:child??Row(
             mainAxisAlignment:mainAxisAlignment?? MainAxisAlignment.center,

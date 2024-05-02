@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/login_screen.dart';
 
 import '../../../../app/utils/app_colors.dart';
 import '../../../../app/utils/helper.dart';
@@ -71,14 +72,21 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           60.verticalSpace,
           ButtonWidget(
             horizontalMargin: 50.w,
-            onPressed: () {},
+            onPressed: () {
+              if(currentIndex != 2){
+                controller.jumpToPage(currentIndex + 1);
+              }else{
+                navigateTo(const LoginScreen(),replace: true);
+              }
+
+            },
             text: "متابعه",
           ),
           16.verticalSpace,
           ButtonWidget(
             horizontalMargin: 50.w,
             onPressed: () {
-              navigateTo(OnBoardingScreen(), replace: true);
+              navigateTo(LoginScreen(), replace: true);
             },
             color: AppColors.geryB3B3B3,
             textColor: AppColors.black,

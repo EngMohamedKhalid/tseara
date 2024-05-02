@@ -28,100 +28,147 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBarWidget(
-        title: "Get Started",
-        centerTitle: true,
-        notify: false,
-      ),
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          var cu = AuthCubit.get();
-          return Form(
-            key: formKey,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 29.sp, ),
-              children: [
-                80.verticalSpace,
-                Row(
-                  children: [
-                    TextWidget(
-                        title: "Please fill your details to login.",
-                      titleFontWeight: FontWeight.normal,
-                      titleSize: 16.sp,
-                      titleColor: AppColors.black252525,
-                    ),
+      body:
+      Stack(
+        children: [
+          Container(
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image: const AssetImage(
+                    AppImages.back,
+                  ),
+                )
+            )
+          ),
+          Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: AlignmentDirectional.topCenter,
+                  end: AlignmentDirectional.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(.4),
+                    Colors.black.withOpacity(.5),
+                    Colors.black.withOpacity(.9),
                   ],
                 ),
-                37.verticalSpace,
-                CustomFormField(
-                  hint: "Username/email".tr(),
-                  controller: cu.loginEmailController,
-                  keyboardType: TextInputType.emailAddress,
-                  errorText:  cu.errorMsg,
-                ),
-                24.verticalSpace,
-                CustomFormField(
-                  hint: "Password".tr(),
-                  controller: cu.loginPasswordController,
-                  suffixIcon: cu.passObscure==false?Icons.visibility:Icons.visibility_off,
-                  obscure:cu.passObscure,
-                  iconPressed: () {
-                    cu.changeVisible();
-                  },
-                ),
-                33.verticalSpace,
-                ButtonWidget(
-                  loading: state is LoadingState,
-                  width: 200.w,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  onPressed: () {
-                    //navigateTo(BNBScreen(),removeAll: true);
-                    if(formKey.currentState!.validate()){
-                      //cu.login();
-                    }
-                  },
-                  text: "Get Started".tr(),
-                ),
-                15.verticalSpace,
-                CustomTextButton(
-                  onPressed: () {
-                    navigateTo( ForgetPasswordScreen());
-                  },
-                  title: "forgetPass".tr(),
-                  titleColor: AppColors.black,
-                  textDecoration: TextDecoration.underline,
-                  titleFontWeight: FontWeight.w500,
-                  titleSize: 14.sp,
-                ),
-                246.verticalSpace,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextWidget(
-                      title: "New Member?",
-                      titleSize: 15.sp,
-                      titleColor: AppColors.black,
-                      titleFontWeight: FontWeight.w500,
-                    ),
-                    //5.horizontalSpace,
-                    CustomTextButton(
-                      onPressed: () {
-                        navigateTo(const RegisterScreen());
-                      },
-                      title: "Register",
-                      titleColor: AppColors.black,
-                      fontFamily: AppFonts.semiBold,
-                      titleFontWeight: AppFonts.semiBold500,
-                      titleSize: 14.sp,
-                    ),
-                  ],
-                ),
-                16.verticalSpace,
-              ],
             ),
-          );
-        },
-      ),
+            child: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                var cu = AuthCubit.get();
+                return Form(
+                  key: formKey,
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(horizontal: 50.sp, ),
+                    children: [
+                      80.verticalSpace,
+                      ImageWidget(
+                        imageUrl: AppImages.appLogo,
+                        width: 150.w,
+                        height: 100.h,
+                      ),
+                      15.verticalSpace,
+                      TextWidget(
+                        title: "اهلا بك في تسعيره ",
+                        titleFontWeight: FontWeight.normal,
+                        titleSize: 22.sp,
+                        titleColor: AppColors.white,
+                      ),
+                      60.verticalSpace,
+                      CustomFormField(
+                        hint: "email".tr(),
+                        controller: cu.loginEmailController,
+                        keyboardType: TextInputType.emailAddress,
+                        errorText:  cu.errorMsg,
+                      ),
+                      20.verticalSpace,
+                      CustomFormField(
+                        hint: "Password".tr(),
+                        controller: cu.loginPasswordController,
+                      ),
+                      Align(
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: CustomTextButton(
+                          onPressed: () {
+                            navigateTo( ForgetPasswordScreen());
+                          },
+                          title: "هل نسيت كلمة السر ؟".tr(),
+                          titleColor: AppColors.white,
+                          textDecoration: TextDecoration.underline,
+                          titleFontWeight: FontWeight.bold,
+                          titleSize: 15.sp,
+                        ),
+                      ),
+                      50.verticalSpace,
+                      ButtonWidget(
+                        loading: state is LoadingState,
+                        outlined: true,
+                        onPressed: () {
+                          //navigateTo(BNBScreen(),removeAll: true);
+                          // if(formKey.currentState!.validate()){
+                          //   //cu.login();
+                          // }
+                        },
+                        text: "تسجيل الدخول".tr(),
+                      ),
+                      20.verticalSpace,
+                      ButtonWidget(
+                        loading: state is LoadingState,
+                        outlined: true,
+                        color: AppColors.white,
+                        textColor: AppColors.black,
+                        icon: ImageWidget(
+                          imageUrl: AppImages.Google,
+                          width: 30.w,
+                          height: 30.h,
+                        ),
+                        onPressed: () {
+                          //navigateTo(BNBScreen(),removeAll: true);
+                          // if(formKey.currentState!.validate()){
+                          //   //cu.login();
+                          // }
+                        },
+                        text: "تسجيل الدخول ب جوجل".tr(),
+                      ),
+                      20.verticalSpace,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomTextButton(
+                            onPressed: () {
+                              navigateTo(const RegisterScreen());
+                            },
+                            title: " انشاء حساب",
+                            titleColor: AppColors.blue,
+                            fontFamily: AppFonts.semiBold,
+                            titleFontWeight: AppFonts.semiBold500,
+                            titleSize: 14.sp,
+                          ),
+                          TextWidget(
+                            title: "ليس لديك حساب بالفعل؟",
+                            titleSize: 15.sp,
+                            titleColor: AppColors.white,
+                            titleFontWeight: FontWeight.w500,
+                          ),
+                          //5.horizontalSpace,
+                        ],
+                      ),
+                      80.verticalSpace,
+                      TextWidget(
+                        title: "جميع الحقوق محفوظه -جامعة الزقازيق كلية الحاسبات والمعلومات 2023",
+                        titleSize: 15.sp,
+                        titleColor: AppColors.white,
+                        titleFontWeight: FontWeight.w500,
+                      ),
+                      20.verticalSpace,
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      )
     );
   }
 }

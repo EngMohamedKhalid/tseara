@@ -134,7 +134,7 @@ class CustomFormField extends StatelessWidget {
               focusNode: focusNode,
               onChanged: onChange,
               obscureText: obscure ?? false,
-              textAlign: align ?? TextAlign.start,
+              textAlign: align ?? TextAlign.center,
               style: TextStyle(
                 height: 1.2.h,
                 fontFamily: fontMedium,
@@ -143,7 +143,7 @@ class CustomFormField extends StatelessWidget {
               ),
               cursorHeight: 20.h,
               decoration: InputDecoration(
-                fillColor: fillColor??Color(0xffDEDEDE),
+                fillColor: fillColor??Colors.white,
                 filled:filled??true ,
                 counterText: "",
                 isDense: true,
@@ -158,15 +158,15 @@ class CustomFormField extends StatelessWidget {
                   height: 1.2.h,
                 ),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 5),
+                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 20),
                     borderSide: const BorderSide(
-                       color: Color(0xffDEDEDE)
+                       color: AppColors.mainColor
                     )
                 ),
                 enabledBorder: enabledBorder ?? OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 5),
+                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 20),
                     borderSide: const BorderSide(
-                      color: Color(0xffDEDEDE),
+                        color: AppColors.mainColor
                     )
                 ),
                 disabledBorder:disableBorder?? OutlineInputBorder(
@@ -175,21 +175,21 @@ class CustomFormField extends StatelessWidget {
                     borderSide: const BorderSide(color:Color(0xffDEDEDE),)
                 ),
                 errorBorder: errorBorder ?? OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.circular(borderRadiusValue ?? 5),
-                    borderSide: const BorderSide(color: AppColors.red,)
+                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 20),
+                    borderSide: const BorderSide(
+                        color: AppColors.red
+                    )
                 ),
                 focusedBorder: focusedBorder ?? OutlineInputBorder(
-                    borderRadius:
-                    BorderRadius.circular(borderRadiusValue ?? 5),
-                    borderSide:
-                    const BorderSide(
-                      color: AppColors.black121212,
-                    )),
+                    borderRadius: BorderRadius.circular(borderRadiusValue ?? 20),
+                    borderSide: const BorderSide(
+                        color: AppColors.mainColor
+                    )
+                ),
                 hintText: hint ?? "",
                 hintStyle: TextStyle(
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.normal,
+                  fontSize: 17.sp,
+                  fontWeight: FontWeight.w500,
                   color:hintColor?? AppColors.black252525,
                 ),
                 labelText: labelText,
