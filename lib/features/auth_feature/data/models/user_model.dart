@@ -1,58 +1,39 @@
 class UserModel {
   UserModel({
-      this.user, 
-      this.token,});
+      this.userName, 
+      this.isAuthanticated, 
+      this.email, 
+      this.role, 
+      this.token, 
+      this.massage, 
+      this.refreshTokenExpire,});
 
   UserModel.fromJson(dynamic json) {
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
-    token = json['token'];
-  }
-  User? user;
-  String? token;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (user != null) {
-      map['user'] = user?.toJson();
-    }
-    map['token'] = token;
-    return map;
-  }
-
-}
-
-class User {
-  User({
-      this.id, 
-      this.name, 
-      this.email, 
-      this.blocked, 
-      this.image, 
-      this.createdAt,});
-
-  User.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
+    userName = json['userName'];
+    isAuthanticated = json['isAuthanticated'];
     email = json['email'];
-    blocked = json['blocked'];
-    image = json['image'];
-    createdAt = json['created_at'];
+    role = json['role'] != null ? json['role'].cast<String>() : [];
+    token = json['token'];
+    massage = json['massage'];
+    refreshTokenExpire = json['refreshTokenExpire'];
   }
-  num? id;
-  String? name;
+  String? userName;
+  bool? isAuthanticated;
   String? email;
-  bool? blocked;
-  String? image;
-  String? createdAt;
+  List<String>? role;
+  String? token;
+  String? massage;
+  String? refreshTokenExpire;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['id'] = id;
-    map['name'] = name;
+    map['userName'] = userName;
+    map['isAuthanticated'] = isAuthanticated;
     map['email'] = email;
-    map['blocked'] = blocked;
-    map['image'] = image;
-    map['created_at'] = createdAt;
+    map['role'] = role;
+    map['token'] = token;
+    map['massage'] = massage;
+    map['refreshTokenExpire'] = refreshTokenExpire;
     return map;
   }
 

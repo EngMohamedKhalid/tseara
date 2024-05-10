@@ -5,6 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tseara/app/widgets/custom_alert_dialog.dart';
+import 'package:tseara/features/auth_feature/data/models/user_model.dart';
+import 'package:tseara/features/auth_feature/domain/use_cases/auth_usecases/login_use_case.dart';
 import '../../../../app/services/cache_service.dart';
 import '../../../../app/utils/app_colors.dart';
 import '../../../../app/utils/get_it_injection.dart';
@@ -41,7 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
   bool passObscure = true;
   bool passConfObscure = true;
   String ? errorMsg;
-
+  UserModel ? userModel;
   void changeVisible(){
     emit(LoadingState());
     passObscure = !passObscure;
@@ -75,8 +78,32 @@ class AuthCubit extends Cubit<AuthState> {
              print(l.cause.toString());
            },
             (r) {
-              print(r);
-              navigateTo(LoginScreen());
+              userModel = r;
+            },
+    );
+    emit(AuthInitial());
+
+  }
+  void login()async{
+    emit(LoadingState());
+    final res = await getIt<LoginUseCase>()(LoginUSeCaseParams(
+        email: "user1@example.com",
+        password:"string1",
+      /*
+        "email": "user1@example.com",
+  "password": "string1"
+       */
+    ),
+    );
+    res.fold(
+           (l) {
+             errorStateHandler(l);
+             globalAlertDialogue("!!يوجد خطأ في  البريد الالكتروني او كلمه المرور");
+             print(l.cause.toString());
+           },
+            (r) {
+              userModel = r;
+              print(userModel?.token??"null");
             },
     );
     emit(AuthInitial());

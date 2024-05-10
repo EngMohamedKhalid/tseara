@@ -14,6 +14,7 @@ import '../../../../../app/widgets/text_button_widget.dart';
 import '../../../../../app/widgets/text_widget.dart';
 import '../../../../app/utils/app_fonts.dart';
 import '../../../../app/widgets/default_app_bar_widget.dart';
+import '../../../home_feature/presentation/screens/home_screen.dart';
 import '../presentation_logic_holder/auth_cubit.dart';
 import 'forget_password_screen.dart';
 
@@ -103,6 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           loading: state is LoadingState,
                           outlined: true,
                           onPressed: () {
+                            navigateTo(HomeScreen(),removeAll: true);
                             //navigateTo(BNBScreen(),removeAll: true);
                             // if(formKey.currentState!.validate()){
                             //   //cu.login();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tseara/features/auth_feature/presentation/screens/register_screen.dart';
+import 'package:tseara/features/home_feature/presentation/screens/home_screen.dart';
 import '../../../../../app/utils/app_assets.dart';
 import '../../../../../app/utils/app_colors.dart';
 import '../../../../../app/utils/helper.dart';
@@ -104,9 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         loading: state is LoadingState,
                         outlined: true,
                         onPressed: () {
-                          //navigateTo(BNBScreen(),removeAll: true);
+                          //navigateTo(HomeScreen(),removeAll: true);
+                          cu.login();
                           // if(formKey.currentState!.validate()){
-                          //   //cu.login();
+                          //   cu.login();
                           // }
                         },
                         text: "تسجيل الدخول".tr(),

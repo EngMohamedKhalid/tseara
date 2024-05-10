@@ -11,7 +11,7 @@ abstract class AuthRemoteDataSource {
   ///
   /// Throws a [ServerException] for all error codes.
   Future<UserModel> login(Map<String, String> map);
-  Future<String> register(Map<String, String> map);
+  Future<UserModel> register(Map<String, String> map);
   Future<String> resendOtp(Map<String, String> map);
   Future<void> resetPassword(Map<String, String> map);
   Future<DeleteModel> delete();
@@ -24,13 +24,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   AuthRemoteDataSourceImpl({required this.networkManager});
 
   @override
-  Future<String> register(Map<String, String> map)  async {
+  Future<UserModel> register(Map<String, String> map)  async {
     final res = await networkManager.request(
       body: map,
       endPoint: kSignUp,
     );
     final data =  await RemoteDataSourceCallHandler()(res);
-    return data.msg??"";
+    return UserModel.fromJson(data.data);
   }
 
   @override
@@ -40,7 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       endPoint: kSignIn,
     );
     final data =  await RemoteDataSourceCallHandler()(res);
-    return UserModel.fromJson(data);
+    return UserModel.fromJson(data.data);
   }
 
   @override

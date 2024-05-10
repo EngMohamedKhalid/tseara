@@ -4,12 +4,12 @@ const String kSecretKey= "sk_test_51NcYZ1IFBuxSP4IyHPxRBxM7hwSNclM111B2vACftn35l
 const String kPublishKey = "pk_test_51NcYZ1IFBuxSP4IyHk35qI4RSKdmWyWl40XRt6T2SPc9OPo35cwnMJY0um0DwCChfDfyMD9Hiq7Ecn8PRttdrHP100XAw4bhFL";
 const String kCustomerId = "cus_Q11FaLd615Ckne";
 
-const String kBaseUrl = "gplibarary.test";
+const String kBaseUrl = "ts3ra.runasp.net";
 const String kBaseVersion = 'api/';
 const String paginationPerPage = '15';
 
 // end points
-const String kSignIn = 'auth/login';
+const String kSignIn = 'Account/Login';
 const String kSignUp = 'register';
 const String kVerifyOtp = 'auth/verify';
 const String kResendOtp = 'auth/resend-verify';

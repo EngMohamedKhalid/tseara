@@ -1,6 +1,7 @@
 import 'package:data_connection_checker_nulls/data_connection_checker_nulls.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tseara/features/auth_feature/domain/use_cases/auth_usecases/login_use_case.dart';
 import '../../features/auth_feature/data/data_source/auth_remote_data_source.dart';
 import '../../features/auth_feature/data/repo_impl/auth_repo_impl.dart';
 import '../../features/auth_feature/domain/repo/auth_repo.dart';
@@ -47,6 +48,7 @@ void _paymentUseCase() {
 
 void _authUseCases() {
   getIt.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(repository: getIt(),));
+  getIt.registerLazySingleton<LoginUseCase>(() => LoginUseCase(repository: getIt(),));
 }
 void _cartUseCases() {
   //registerLazySingleton<PlaceOrderUseCase>(() => PlaceOrderUseCase(repository: getIt()));

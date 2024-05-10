@@ -20,7 +20,6 @@ class LoginUseCase implements UseCase<UserModel, LoginUSeCaseParams> {
 class LoginUSeCaseParams {
   final String email;
   final String password;
-  final String platform;
   //fcm_token
   // final String deviceId;
   //ios or Android
@@ -30,7 +29,6 @@ class LoginUSeCaseParams {
       {
         required this.email,
         required this.password,
-        required this.platform,
         // required this.deviceId,
         // required this.deviceType,
       });
@@ -39,7 +37,6 @@ class LoginUSeCaseParams {
     final map = {
       "email": email,
       "password": password,
-      "platform": platform,
       // "device_id": deviceId,
       // "device_type": deviceType,
     };

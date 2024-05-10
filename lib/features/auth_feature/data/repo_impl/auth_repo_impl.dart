@@ -48,8 +48,8 @@ class AuthRepoImpl extends AuthRepo{
   }
 
   @override
-  Future<Either<Failure, String>> register(Map<String, String> map) async {
-    return await RepoImplCallHandler<String>(networkInfo)(() async {
+  Future<Either<Failure, UserModel>> register(Map<String, String> map) async {
+    return await RepoImplCallHandler<UserModel>(networkInfo)(() async {
       return await authRemoteDataSource.register(map);
     });
   }

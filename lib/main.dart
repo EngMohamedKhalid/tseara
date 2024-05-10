@@ -7,7 +7,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:overlay_support/overlay_support.dart';
-import 'package:tseara/features/home_feature/presentation/screens/home_screen.dart';
 import 'app/themes/get_theme.dart';
 import 'app/utils/bloc_observer.dart';
 import 'app/utils/consts.dart';
@@ -100,7 +99,7 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
-            home:const HomeScreen(),
+            home:const SplashScreen(),
           ),
         ),
       ),

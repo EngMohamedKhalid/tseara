@@ -5,13 +5,13 @@ import '../../../../../app/usecase/usecase.dart';
 import '../../../data/models/user_model.dart';
 import '../../repo/auth_repo.dart';
 
-class RegisterUseCase implements UseCase<String, RegisterUSeCaseParams> {
+class RegisterUseCase implements UseCase<UserModel, RegisterUSeCaseParams> {
   final AuthRepo repository;
 
   RegisterUseCase({required this.repository});
 
   @override
-  Future<Either<Failure, String>> call(RegisterUSeCaseParams params) async{
+  Future<Either<Failure, UserModel>> call(RegisterUSeCaseParams params) async{
     return await repository.register(params.toMap());
   }
 
