@@ -13,7 +13,7 @@ Future<bool?> showToast({
       msg: msg,
       toastLength: Toast.LENGTH_SHORT,
       gravity:gravity?? ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 5,
+      timeInSecForIosWeb: 7,
       backgroundColor:backgroundColor??AppColors.mainColor,
       textColor: textColor??AppColors.white,
       fontSize: 18.sp

@@ -77,61 +77,119 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         60.verticalSpace,
                         CustomFormField(
+                          hint: "First Name".tr(),
+                          controller: cu.registerFirstNameController,
+                          errorText:  cu.errorMsg,
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
+                          hint: "Last Name".tr(),
+                          controller: cu.registerLastNameController,
+                          errorText:  cu.errorMsg,
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
                           hint: "Full Name".tr(),
-                          controller: cu.loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
+                          controller: cu.registerFullNameController,
                           errorText:  cu.errorMsg,
                         ),
                         20.verticalSpace,
                         CustomFormField(
                           hint: "email".tr(),
-                          controller: cu.loginEmailController,
+                          controller: cu.registerEmailController,
                           keyboardType: TextInputType.emailAddress,
                           errorText:  cu.errorMsg,
                         ),
                         20.verticalSpace,
                         CustomFormField(
+                          hint: "National Id".tr(),
+                          controller: cu.registerNationalIdController,
+                          keyboardType: TextInputType.number,
+                          errorText:  cu.errorMsg,
+                          maxLength: 14,
+                          validator:(value) {
+                            if (value!.isEmpty) {
+                              return "National Id is Required".tr();
+                            }else if(value.length<14){
+                              return "National Id is not valid".tr();
+                            }
+                            return null;
+                          },
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
+                          hint: "Phone Number".tr(),
+                          controller: cu.registerPhoneController,
+                          keyboardType: TextInputType.number,
+                          errorText:  cu.errorMsg,
+                          maxLength: 11,
+                          validator:(value) {
+                            if (value!.isEmpty) {
+                              return "Phone is Required".tr();
+                            }else if(value.length!=11){
+                              return "National Id is not valid".tr();
+                            }
+                            return null;
+                          },
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
                           hint: "Password".tr(),
-                          controller: cu.loginPasswordController,
+                          controller: cu.registerPassController,
+                          validator:(value) {
+                            if (value!.isEmpty) {
+                              return "Password is Required".tr();
+                            }else if(value.length<6){
+                              return "Password must be at least 6 characters".tr();
+                            }
+                            return null;
+                          },
                         ),
                         20.verticalSpace,
                         CustomFormField(
                           hint: "Confirm Password".tr(),
-                          controller: cu.loginPasswordController,
+                          controller: cu.registerConfPassController,
+                          validator:(value) {
+                            if (value!.isEmpty) {
+                              return "Confirm Password is Required".tr();
+                            }else if(value.length<6){
+                              return "Confirm Password must be at least 6 characters".tr();
+                            }
+                            return null;
+                          },
                         ),
                         50.verticalSpace,
                         ButtonWidget(
                           loading: state is LoadingState,
                           outlined: true,
                           onPressed: () {
-                            navigateTo(HomeScreen(),removeAll: true);
-                            //navigateTo(BNBScreen(),removeAll: true);
-                            // if(formKey.currentState!.validate()){
-                            //   //cu.login();
-                            // }
+                            if(formKey.currentState!.validate()){
+                              print(",${(cu.registerNationalIdController.text.substring(0,13)).length}");
+                              cu.register();
+                            }
                           },
                           text: " انشاء حساب".tr(),
                         ),
                         20.verticalSpace,
-                        ButtonWidget(
-                          loading: state is LoadingState,
-                          outlined: true,
-                          color: AppColors.white,
-                          textColor: AppColors.black,
-                          icon: ImageWidget(
-                            imageUrl: AppImages.Google,
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                          onPressed: () {
-                            //navigateTo(BNBScreen(),removeAll: true);
-                            // if(formKey.currentState!.validate()){
-                            //   //cu.login();
-                            // }
-                          },
-                          text: "تسجيل الدخول ب جوجل".tr(),
-                        ),
-                        20.verticalSpace,
+                        // ButtonWidget(
+                        //   loading: state is LoadingState,
+                        //   outlined: true,
+                        //   color: AppColors.white,
+                        //   textColor: AppColors.black,
+                        //   icon: ImageWidget(
+                        //     imageUrl: AppImages.Google,
+                        //     width: 30.w,
+                        //     height: 30.h,
+                        //   ),
+                        //   onPressed: () {
+                        //     //navigateTo(BNBScreen(),removeAll: true);
+                        //     // if(formKey.currentState!.validate()){
+                        //     //   //cu.login();
+                        //     // }
+                        //   },
+                        //   text: "تسجيل الدخول ب جوجل".tr(),
+                        // ),
+                        // 20.verticalSpace,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [

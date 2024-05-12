@@ -10,6 +10,7 @@ import 'package:overlay_support/overlay_support.dart';
 import 'app/themes/get_theme.dart';
 import 'app/utils/bloc_observer.dart';
 import 'app/utils/consts.dart';
+import 'app/utils/dio_helper.dart';
 import 'app/utils/get_it_injection.dart';
 import 'app/utils/language_manager.dart';
 import 'app/utils/navigation_helper.dart';
@@ -24,12 +25,9 @@ String ? myLocationCity;
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  DioHelper.init();
   Bloc.observer = MyBlocObserver();
   await init();
-  Stripe.publishableKey = kPublishKey;
   // Placemark placemark = await _getLocation();
   // myLocationName = placemark.street!;
   // myLocationCity = placemark.locality!;

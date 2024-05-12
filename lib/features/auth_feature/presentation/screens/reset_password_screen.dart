@@ -80,23 +80,27 @@ class ResetPasswordScreen extends StatelessWidget {
                         ),
                         60.verticalSpace,
                         CustomFormField(
+                          hint: "Token From Email Link".tr(),
+                          controller: cu.resetTokenController,
+                        ),
+                        20.verticalSpace,
+                        CustomFormField(
                           hint: "Password".tr(),
-                          controller: cu.loginPasswordController,
+                          controller: cu.resetPassController,
                         ),
                         20.verticalSpace,
                         CustomFormField(
                           hint: "Confirm Password".tr(),
-                          controller: cu.loginPasswordController,
+                          controller: cu.resetPassConfirmController,
                         ),
                         30.verticalSpace,
                         ButtonWidget(
                           loading: state is LoadingState,
                           outlined: true,
                           onPressed: () {
-                            navigateTo(OtpScreen());
-                            // if(formKey.currentState!.validate()){
-                            //   //cu.login();
-                            // }
+                            if(formKey.currentState!.validate()){
+                              cu.resetPassword();
+                            }
                           },
                           text: "تغيير كلمة السر".tr(),
                         ),
@@ -123,25 +127,25 @@ class ResetPasswordScreen extends StatelessWidget {
                             //5.horizontalSpace,
                           ],
                         ),
-                        20.verticalSpace,
-                        ButtonWidget(
-                          loading: state is LoadingState,
-                          outlined: true,
-                          color: AppColors.white,
-                          textColor: AppColors.black,
-                          icon: ImageWidget(
-                            imageUrl: AppImages.Google,
-                            width: 30.w,
-                            height: 30.h,
-                          ),
-                          onPressed: () {
-                            //navigateTo(BNBScreen(),removeAll: true);
-                            // if(formKey.currentState!.validate()){
-                            //   //cu.login();
-                            // }
-                          },
-                          text: "تسجيل الدخول ب جوجل".tr(),
-                        ),
+                        // 20.verticalSpace,
+                        // ButtonWidget(
+                        //   loading: state is LoadingState,
+                        //   outlined: true,
+                        //   color: AppColors.white,
+                        //   textColor: AppColors.black,
+                        //   icon: ImageWidget(
+                        //     imageUrl: AppImages.Google,
+                        //     width: 30.w,
+                        //     height: 30.h,
+                        //   ),
+                        //   onPressed: () {
+                        //     //navigateTo(BNBScreen(),removeAll: true);
+                        //     // if(formKey.currentState!.validate()){
+                        //     //   //cu.login();
+                        //     // }
+                        //   },
+                        //   text: "تسجيل الدخول ب جوجل".tr(),
+                        // ),
                         130.verticalSpace,
                         TextWidget(
                           title: "جميع الحقوق محفوظه -جامعة الزقازيق كلية الحاسبات والمعلومات 2023",

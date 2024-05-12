@@ -105,33 +105,31 @@ class _LoginScreenState extends State<LoginScreen> {
                         loading: state is LoadingState,
                         outlined: true,
                         onPressed: () {
-                          //navigateTo(HomeScreen(),removeAll: true);
-                          cu.login();
-                          // if(formKey.currentState!.validate()){
-                          //   cu.login();
-                          // }
+                          if(formKey.currentState!.validate()){
+                            cu.login();
+                          }
                         },
                         text: "تسجيل الدخول".tr(),
                       ),
-                      20.verticalSpace,
-                      ButtonWidget(
-                        loading: state is LoadingState,
-                        outlined: true,
-                        color: AppColors.white,
-                        textColor: AppColors.black,
-                        icon: ImageWidget(
-                          imageUrl: AppImages.Google,
-                          width: 30.w,
-                          height: 30.h,
-                        ),
-                        onPressed: () {
-                          //navigateTo(BNBScreen(),removeAll: true);
-                          // if(formKey.currentState!.validate()){
-                          //   //cu.login();
-                          // }
-                        },
-                        text: "تسجيل الدخول ب جوجل".tr(),
-                      ),
+                      // 20.verticalSpace,
+                      // ButtonWidget(
+                      //   loading: state is LoadingState,
+                      //   outlined: true,
+                      //   color: AppColors.white,
+                      //   textColor: AppColors.black,
+                      //   icon: ImageWidget(
+                      //     imageUrl: AppImages.Google,
+                      //     width: 30.w,
+                      //     height: 30.h,
+                      //   ),
+                      //   onPressed: () {
+                      //     //navigateTo(BNBScreen(),removeAll: true);
+                      //     // if(formKey.currentState!.validate()){
+                      //     //   //cu.login();
+                      //     // }
+                      //   },
+                      //   text: "تسجيل الدخول ب جوجل".tr(),
+                      // ),
                       20.verticalSpace,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
