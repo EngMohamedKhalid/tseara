@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gif_view/gif_view.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../app/services/cache_service.dart';
@@ -34,182 +35,81 @@ class _ProfileScreenState extends State<ProfileScreen> {
   XFile? userImage;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: DefaultAppBarWidget(
-        title: 'My Profile',
-        centerTitle: true,
-        notify: false,
-      ),
-      body: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          return ListView(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-            children: [
-              Align(
-                alignment: AlignmentDirectional.center,
-                child: Stack(
-                  clipBehavior: Clip.none,
-                  alignment: AlignmentDirectional.bottomEnd,
-                  children: [
-                    userImage != null
-                        ? CircleAvatar(
-                            radius: 70.r,
-                            backgroundImage: FileImage(File(userImage!.path))
-                            )
-                        :
-                    CircleAvatar(
-                      radius: 70.r,
-                      backgroundImage: NetworkImage(
-                        "http://graduation2024.first-meeting.net/Uploads/Users/defultuser.png",
-                      ),
-                    ),
-                    Container(
-                      width: 50.w,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                          color: AppColors.mainColor, shape: BoxShape.circle),
-                      child: InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Container(
-                                width: double.infinity,
-                                decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16),
-                                      topRight: Radius.circular(16),
-                                    )),
-                                //height: 200.h,
-                                padding: EdgeInsets.symmetric(vertical: 20.h),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    TextWidget(
-                                      title: "choose Picture",
-                                      titleAlign: TextAlign.center,
-                                      titleSize: 20.sp,
-                                      titleFontWeight: FontWeight.w600,
-                                      fontFamily: AppFonts.regular,
-                                      titleColor: Colors.black,
-                                    ),
-                                    20.verticalSpace,
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                            await ImagePickerService.getImage(
-                                                    imageSource:
-                                                        ImageSource.camera)
-                                                .then((value) {
-                                              userImage = value;
-                                              setState(() {});
-                                            });
-                                          },
-                                          icon: Icon(
-                                            Icons.camera_alt_rounded,
-                                            color: Colors.black,
-                                            size: 25.sp,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () async {
-                                            Navigator.pop(context);
-                                            await ImagePickerService.getImage(
-                                                    imageSource:
-                                                        ImageSource.gallery)
-                                                .then((value) {
-                                              userImage = value;
-                                              setState(() {});
-                                            });
-                                          },
-                                          icon: Icon(
-                                            Icons.photo_library_rounded,
-                                            color: Colors.black,
-                                            size: 25.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: Icon(
-                          Icons.edit,
-                          size: 24.sp,
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
-                  ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: DefaultAppBarWidget(
+          title: 'تعديل بياناتك',
+          centerTitle: true,
+          notify: false,
+        ),
+        body: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return ListView(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
+              children: [
+                GifView.asset(
+                  'assets/images/edit.gif',
+                  height: 200,
+                  width: 200,
+                  frameRate: 30, // default is 15 FPS
                 ),
-              ),
-              13.verticalSpace,
-              TextWidget(
-                title: AuthCubit.get().userModel?.userName ??
-                    getIt<CacheService>().getUserData()?.userName ??
-                    "",
-                titleSize: 16.sp,
-                fontFamily: AppFonts.bold,
-                titleFontWeight: AppFonts.bold600,
-              ),
-              TextWidget(
-                title: AuthCubit.get().userModel?.email ??
-                    getIt<CacheService>().getUserData()?.email ??
-                    "",
-                titleSize: 13.sp,
-              ),
-              20.verticalSpace,
-              CustomFormField(
-                header: "First Name",
-                controller: fNameCont,
-              ),
-              16.verticalSpace,
-              CustomFormField(
-                header: "Last Name",
-                controller: lNameCont,
-              ),
-              16.verticalSpace,
-              CustomFormField(
-                header: "Address",
-                controller: addressCont,
-                suffixIcon: Icons.location_on,
-              ),
-              16.verticalSpace,
-              CustomFormField(
-                header: "Email",
-                controller: emailCont,
-              ),
-              16.verticalSpace,
-              CustomFormField(
-                header: "Password",
-                controller: passwordCont,
-                suffixIcon: Icons.visibility_off,
-              ),
-              16.verticalSpace,
-            ],
-          );
-        },
-      ),
-      bottomNavigationBar: BlocBuilder<AuthCubit, AuthState>(
-        builder: (context, state) {
-          return Container(
-              padding: EdgeInsets.all(16.sp),
-              child: ButtonWidget(
-                loading: state is LoadingState,
-                onPressed: () {},
-                text: "Save",
-                mainAxisAlignment: MainAxisAlignment.center,
-                textColor: AppColors.white,
-              ));
-        },
+                20.verticalSpace,
+                CustomFormField(
+                  header: "ألأسم ألأول",
+                  controller: fNameCont,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "ألأسم الأخير",
+                  controller: lNameCont,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "بريدك الألكتروني",
+                  controller: emailCont,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "الرقم القومي",
+                  controller: emailCont,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "كلمة المرور",
+                  controller: passwordCont,
+                  suffixIcon: Icons.visibility_off,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "تأكيد كلمة المرور",
+                  controller: passwordCont,
+                  suffixIcon: Icons.visibility_off,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "رقم الهاتف",
+                  controller: fNameCont,
+                ),
+                16.verticalSpace,
+              ],
+            );
+          },
+        ),
+        bottomNavigationBar: BlocBuilder<AuthCubit, AuthState>(
+          builder: (context, state) {
+            return Container(
+                padding: EdgeInsets.all(16.sp),
+                child: ButtonWidget(
+                  loading: state is LoadingState,
+                  color: AppColors.blue,
+                  onPressed: () {},
+                  text: "تعديل",
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  textColor: AppColors.white,
+                ));
+          },
+        ),
       ),
     );
   }

@@ -7,6 +7,9 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:overlay_support/overlay_support.dart';
+import 'package:tseara/features/bottom_navigation_feature/presentation/presentation_logic_holder/bottom_navigation_cubit.dart';
+import 'package:tseara/features/bottom_navigation_feature/presentation/screens/bottom_navigation_screen.dart';
+import 'package:tseara/features/categories_feature/presentation/PLH/category_cubit.dart';
 import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
 import 'package:tseara/features/home_feature/presentation/screens/home_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/PLH/profile_cubit.dart';
@@ -49,7 +52,12 @@ void main() async{
         BlocProvider<ProfileCubit>(
           create: (BuildContext context) => ProfileCubit(),
         ),
-
+        BlocProvider<BottomNavigationCubit>(
+          create: (BuildContext context) => BottomNavigationCubit(),
+        ),
+        BlocProvider<CategoryCubit>(
+          create: (BuildContext context) => CategoryCubit()..getCategories(),
+        ),
 
       ],
       child: const MyApp(),
@@ -91,7 +99,7 @@ class MyApp extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             // locale: CookieManagerService.getLocale,
             locale: context.locale,
-            title: 'Book Store',
+            title: 'Tseara',
             theme: bookStoreTheme(),
             debugShowCheckedModeBanner: false,
             navigatorKey: getIt<NavHelper>().navigatorKey,
@@ -106,32 +114,10 @@ class MyApp extends StatelessWidget {
                 );
               },
             ),
-            home:const HomeScreen(),
+            home:const BNBScreen(),
           ),
         ),
       ),
     );
   }
 }
-
-Future<Placemark> _getLocation() async {
-  List<Placemark> ? placemark;
-  await Geolocator.getCurrentPosition(
-    desiredAccuracy: LocationAccuracy.high,
-  ).then((value) async{
-    myPosition = value;
-    print(value);
-    placemark = await placemarkFromCoordinates(
-      value.latitude,
-      value.longitude,
-    );
-    print(placemark?.first.name);
-    print(placemark?.first.locality);
-    print(placemark?.first.street);
-  });
-  return placemark!.first;
-}
-
-//29.979562,31.255448
-
-//30.037845,31.221526

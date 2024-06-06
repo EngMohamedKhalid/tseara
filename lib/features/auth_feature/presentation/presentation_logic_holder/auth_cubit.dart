@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tseara/app/widgets/custom_alert_dialog.dart';
 import 'package:tseara/features/auth_feature/data/models/user_model.dart';
 import 'package:tseara/features/auth_feature/domain/use_cases/auth_usecases/login_use_case.dart';
+import 'package:tseara/features/bottom_navigation_feature/presentation/screens/bottom_navigation_screen.dart';
 import 'package:tseara/features/home_feature/presentation/screens/home_screen.dart';
 import '../../../../app/services/cache_service.dart';
 import '../../../../app/utils/app_colors.dart';
@@ -77,7 +78,7 @@ class AuthCubit extends Cubit<AuthState> {
       userModel = UserModel.fromJson(value.data);
       await getIt<CacheService>().setUserToken(token: userModel?.token??"");
       await getIt<CacheService>().saveUserData(encodedUser: json.encode(userModel?.toJson()));
-      navigateTo( const HomeScreen(),removeAll: true);
+      navigateTo( const BNBScreen(),removeAll: true);
       emit(AuthInitial());
     }).catchError((error) {
       globalAlertDialogue("!!يوجد خطأ في  البريد الالكتروني او كلمه المرور");
@@ -102,7 +103,7 @@ class AuthCubit extends Cubit<AuthState> {
       userModel = UserModel.fromJson(value.data);
       await getIt<CacheService>().setUserToken(token: userModel?.token??"");
       await getIt<CacheService>().saveUserData(encodedUser: json.encode(userModel?.toJson()));
-      navigateTo( const HomeScreen(),removeAll: true);
+      navigateTo( const BNBScreen(),removeAll: true);
       print("user token is ${userModel?.token??"No token"}");
       print(getIt<CacheService>().getUserData());
       print(getIt<CacheService>().getUserData()?.token);
