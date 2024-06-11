@@ -13,6 +13,7 @@ import 'package:tseara/features/categories_feature/presentation/PLH/category_cub
 import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
 import 'package:tseara/features/home_feature/presentation/screens/home_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/PLH/profile_cubit.dart';
+import 'app/services/cache_service.dart';
 import 'app/themes/get_theme.dart';
 import 'app/utils/bloc_observer.dart';
 import 'app/utils/consts.dart';
@@ -34,6 +35,7 @@ void main() async{
   DioHelper.init();
   Bloc.observer = MyBlocObserver();
   await init();
+  print( getIt<CacheService>().getUserToken());
   // Placemark placemark = await _getLocation();
   // myLocationName = placemark.street!;
   // myLocationCity = placemark.locality!;

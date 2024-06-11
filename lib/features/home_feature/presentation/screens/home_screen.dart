@@ -11,9 +11,13 @@ import 'package:tseara/app/widgets/image_widget.dart';
 import 'package:tseara/app/widgets/loading.dart';
 import 'package:tseara/app/widgets/text_widget.dart';
 import 'package:tseara/features/categories_feature/presentation/PLH/category_cubit.dart';
+import 'package:tseara/features/categories_feature/presentation/screens/categories_screen.dart';
+import 'package:tseara/features/categories_feature/presentation/widgets/custom_sub_category_product_item.dart';
 import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
 import 'package:tseara/features/home_feature/presentation/widgets/custom_home_row_item.dart';
 import 'package:tseara/features/notifications_feature/presentation/screens/notifications_screen.dart';
+import 'package:tseara/features/profile_feature/presentation/screens/all_ports_screen.dart';
+import 'package:tseara/features/profile_feature/presentation/screens/favourit_product_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/screens/setting_screen.dart';
 
 import '../../../../app/services/cache_service.dart';
@@ -30,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    HomeCubit.get().getHomeFavorites();
+    HomeCubit.get().getPorts();
   }
 
   @override
@@ -109,7 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           16.verticalSpace,
-          CustomHomeRowItem(),
+          CustomHomeRowItem(
+            onTap: () {
+              navigateTo(CategoriesScreen(isBNB: false,));
+            },
+          ),
           30.verticalSpace,
           BlocBuilder<CategoryCubit, CategoryState>(
             builder: (context, state) {
@@ -189,6 +199,9 @@ class _HomeScreenState extends State<HomeScreen> {
           30.verticalSpace,
           CustomHomeRowItem(
             name: "المنافذ",
+            onTap: () {
+              navigateTo(AllPortsScreen());
+            }
           ),
           30.verticalSpace,
           BlocBuilder<HomeCubit, HomeState>(
@@ -265,7 +278,48 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                     );
             },
-          )
+          ),
+          30.verticalSpace,
+          CustomHomeRowItem(
+            name: "منتجاتك المفضلة",
+            onTap: () {
+              navigateTo(FavouriteProductScreen());
+            }
+          ),
+          30.verticalSpace,
+          BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              var cubit = HomeCubit.get();
+              return state is HomeFavLoaded
+                  ? Center(
+                      child: Loading(),
+                    )
+                  : SizedBox(
+                      height: 350.h,
+                      child: cubit.getHomeFavouritesModel?.favoriteProducts?.length == 0
+                          ? Center(
+                              child: TextWidget(
+                                  title: "لا يوجد نتائج",
+                                  titleSize: 24.sp,
+                                  titleColor: AppColors.black,
+                                  titleFontWeight: FontWeight.w500),
+                            )
+                          : ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: cubit.getHomeFavouritesModel?.favoriteProducts?.length ?? 0,
+                              reverse: true,
+                              itemBuilder: (context, index) {
+                                return CustomSubCatProductItem(
+                                  isFav: true,
+                                  products: cubit.getHomeFavouritesModel!.favoriteProducts![index],
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  16.horizontalSpace,
+                            ),
+                    );
+            },
+          ),
         ],
       ),
     ));

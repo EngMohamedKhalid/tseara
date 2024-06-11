@@ -76,7 +76,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 ),
                 20.verticalSpace,
                 TextWidget(
-                  title: AuthCubit.get().userModel?.userName ?? "Rahma Atef",
+                  title:  getIt<CacheService>().getUserData()?.userName ?? "",
                   titleSize: 20.sp,
                   fontFamily: AppFonts.bold,
                   titleColor: AppColors.white,
@@ -85,7 +85,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 10.verticalSpace,
                 TextWidget(
                   title:
-                      AuthCubit.get().userModel?.email ?? "rahmaAtef@gmail.com",
+                  getIt<CacheService>().getUserData()?.email ?? "",
                   titleSize: 15.sp,
                   fontFamily: AppFonts.semiBold,
                   titleColor: AppColors.white,

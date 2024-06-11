@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
 import '../../../../app/services/cache_service.dart';
 import '../../../../app/utils/app_assets.dart';
 import '../../../../app/utils/app_colors.dart';
@@ -20,7 +21,6 @@ class BNBScreen extends StatefulWidget {
 }
 
 class _BNBScreenState extends State<BNBScreen> {
-
   @override
   Widget build(BuildContext context) {
     return  BlocBuilder<BottomNavigationCubit, BottomNavigationStats>(

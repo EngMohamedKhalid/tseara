@@ -1,8 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tseara/features/home_feature/data/models/get_home_favourites_model.dart';
 import 'package:tseara/features/home_feature/data/models/port_model.dart';
 
+import '../../../../app/services/cache_service.dart';
 import '../../../../app/utils/dio_helper.dart';
 import '../../../../app/utils/get_it_injection.dart';
 import '../../../../app/utils/navigation_helper.dart';
@@ -15,10 +17,15 @@ class HomeCubit extends Cubit<HomeState> {
   static HomeCubit get() => BlocProvider.of(getIt<NavHelper>().navigatorKey.currentState!.context);
   List<PortModel> ?ports;
   List<PortModel> ?searchPorts;
-  void getPorts() {
+  GetHomeFavouritesModel ?getHomeFavouritesModel;
+  void getPorts({ int? type , int? govern}) {
     emit(HomeLoading());
     DioHelper.getData(
         url: 'Port/GetAllPorts',
+      queryParameters: {
+          "PortType":type??null,
+          "governorate":govern??null,
+      }
     ).then((value) {
       ports = (value.data as List).map((e) => PortModel.fromJson(e)).toList();
       searchPorts = ports;
@@ -43,5 +50,22 @@ class HomeCubit extends Cubit<HomeState> {
     }
     searchPorts = result;
     emit(HomeInitial());
+  }
+
+  void getHomeFavorites() {
+    emit(HomeFavLoaded());
+    print("started");
+    DioHelper.getData(
+      url: "Account/GetCurrentUser2",
+    ).then((value) {
+      print(value.data);
+      getHomeFavouritesModel = GetHomeFavouritesModel.fromJson(value.data);
+      print(getHomeFavouritesModel?.favoriteProducts?.length??0);
+      print("=====home fav==========");
+      emit(HomeFavInitial());
+    }).catchError((error) {
+      print(error.toString());
+      emit(HomeFavInitial());
+    });
   }
 }

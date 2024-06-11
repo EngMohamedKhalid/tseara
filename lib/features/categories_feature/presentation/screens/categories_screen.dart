@@ -14,8 +14,8 @@ import '../../../../app/widgets/image_widget.dart';
 import '../../../../app/widgets/text_widget.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  const CategoriesScreen({super.key});
-
+  const CategoriesScreen({super.key,  this.isBNB = true});
+  final bool isBNB;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -24,7 +24,7 @@ class CategoriesScreen extends StatelessWidget {
         appBar: DefaultAppBarWidget(
           title: "الأقسام",
           notify: false,
-          canBack: false,
+          canBack:isBNB? false:true,
           centerTitle: true,
         ),
         body: BlocBuilder<CategoryCubit, CategoryState>(

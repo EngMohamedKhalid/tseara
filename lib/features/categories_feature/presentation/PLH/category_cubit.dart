@@ -70,4 +70,24 @@ class CategoryCubit extends Cubit<CategoryState> {
       emit(CategoryInitial());
     });
   }
+
+  void searchSubCategory({required String searchKey}){
+    emit(CategorySearchLoading());
+    List<SubCategoryModel>? result=[];
+    if(searchKey.isEmpty){
+      result = subCategories;
+      emit(CategoryInitial());
+    }else{
+     subCategories?.forEach((element) {
+       element.products?.forEach((e) {
+         if(e.productName!.toLowerCase().contains(searchKey.toLowerCase())){
+           result?.add(element);
+           emit(CategoryInitial());
+         }
+       });
+     });
+    }
+    subCategoriesSearch = result;
+    emit(CategoryInitial());
+  }
 }

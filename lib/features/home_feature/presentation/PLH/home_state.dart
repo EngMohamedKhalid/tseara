@@ -17,3 +17,11 @@ final class HomeCategoriesLoaded extends HomeState {
   @override
   List<Object> get props => [];
 }
+final class HomeFavLoaded extends HomeState {
+  @override
+  List<Object> get props => [];
+}
+final class HomeFavInitial extends HomeState {
+  @override
+  List<Object> get props => [];
+}

@@ -7,6 +7,7 @@ class TextWidget extends StatelessWidget {
   final String title;
   final String? fontFamily;
   final Color? titleColor;
+  final Color? decorationColor;
   final TextAlign? titleAlign;
   final double? titleSize;
   final TextDecoration? textDecoration;
@@ -19,6 +20,7 @@ class TextWidget extends StatelessWidget {
       {super.key, required this.title,
       this.titleColor,
       this.titleAlign,
+      this.decorationColor,
       this.underLine = false, this.titleSize,
       this.titleMaxLines,
       this.titleFontWeight, this.overflow, this.textDecoration,this.fontFamily, this.height});
@@ -34,7 +36,7 @@ class TextWidget extends StatelessWidget {
         fontSize: titleSize??18.sp,
         fontWeight: titleFontWeight ?? FontWeight.normal,
         height: height,
-        decorationColor: AppColors.mainColor
+        decorationColor:decorationColor?? AppColors.mainColor
       ),
       maxLines: titleMaxLines??2,
       textAlign: titleAlign ?? TextAlign.center,

@@ -7,8 +7,8 @@ import 'package:tseara/app/widgets/custom_form_field.dart';
 import 'package:tseara/app/widgets/default_app_bar_widget.dart';
 
 class AddReportScreen extends StatelessWidget {
-  const AddReportScreen({super.key});
-
+  const AddReportScreen({super.key,  this.isBNB=true});
+  final bool isBNB;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,6 +16,7 @@ class AddReportScreen extends StatelessWidget {
         title: "",
         centerTitle: true,
         notify: false,
+        canBack:isBNB? false:true,
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 20.w),
