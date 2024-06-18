@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tseara/app/utils/app_colors.dart';
 import 'package:tseara/app/widgets/button_widget.dart';
@@ -6,7 +7,10 @@ import 'package:tseara/app/widgets/default_app_bar_widget.dart';
 import 'package:tseara/app/widgets/image_widget.dart';
 import 'package:tseara/features/profile_feature/presentation/widgets/custom_fav_product_item.dart';
 
+import '../../../../app/widgets/loading.dart';
 import '../../../../app/widgets/text_widget.dart';
+import '../../../categories_feature/presentation/widgets/custom_sub_category_product_item.dart';
+import '../../../home_feature/presentation/PLH/home_cubit.dart';
 
 class FavouriteProductScreen extends StatelessWidget {
   const FavouriteProductScreen({super.key});
@@ -21,19 +25,36 @@ class FavouriteProductScreen extends StatelessWidget {
           centerTitle: true,
           notify: false,
         ),
-        body: GridView.builder(
-          padding: EdgeInsets.all(16.sp),
-            itemCount: 10,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              mainAxisSpacing: 10.h,
-              crossAxisSpacing: 10.w,
-              childAspectRatio: 0.6,
-            ),
-            itemBuilder: (context, index) {
-              return CustomFavProductItem();
-            },
-        )
+        body:
+        BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            var cubit = HomeCubit.get();
+            return state is HomeFavLoaded
+                ? Center(
+              child: Loading(),
+            )
+                : cubit.getHomeFavouritesModel?.favoriteProducts?.length == 0
+                    ? Center(
+                  child: TextWidget(
+                      title: "لا يوجد نتائج",
+                      titleSize: 24.sp,
+                      titleColor: AppColors.black,
+                      titleFontWeight: FontWeight.w500),
+                )
+                    : ListView.separated(
+                  itemCount: cubit.getHomeFavouritesModel?.favoriteProducts?.length ?? 0,
+                  reverse: true,
+                  itemBuilder: (context, index) {
+                    return CustomFavProductItem(
+
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                  16.horizontalSpace,
+                );
+          },
+        ),
+
       ),
     );
   }

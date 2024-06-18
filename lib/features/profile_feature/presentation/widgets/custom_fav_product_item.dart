@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tseara/app/utils/app_colors.dart';
+import 'package:tseara/app/utils/helper.dart';
 import 'package:tseara/app/widgets/button_widget.dart';
 import 'package:tseara/app/widgets/default_app_bar_widget.dart';
 import 'package:tseara/app/widgets/image_widget.dart';
+import 'package:tseara/features/profile_feature/presentation/screens/add_report_screen.dart';
 
 import '../../../../app/widgets/text_widget.dart';
 class CustomFavProductItem extends StatelessWidget {
@@ -65,6 +67,9 @@ class CustomFavProductItem extends StatelessWidget {
               ButtonWidget(
                 text: "أرسل شكوي",
                 width: 200.w,
+                onPressed: () {
+                  navigateTo(AddReportScreen(isBNB: false,));
+                },
               ),
             ],
           ),
