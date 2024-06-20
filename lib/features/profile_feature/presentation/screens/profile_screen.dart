@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tseara/app/widgets/loading.dart';
+import 'package:tseara/features/profile_feature/presentation/PLH/profile_cubit.dart';
 
 import '../../../../app/services/cache_service.dart';
 import '../../../../app/services/image_picker_service/image_picker_service.dart';
@@ -27,25 +29,23 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  TextEditingController fNameCont = TextEditingController();
-  TextEditingController lNameCont = TextEditingController();
-  TextEditingController addressCont = TextEditingController();
-  TextEditingController emailCont = TextEditingController();
-  TextEditingController passwordCont = TextEditingController();
-  XFile? userImage;
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: DefaultAppBarWidget(
-          title: 'تعديل بياناتك',
-          centerTitle: true,
-          notify: false,
-        ),
-        body: BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return ListView(
+      child: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          ProfileCubit cubit = ProfileCubit.get();
+          return Scaffold(
+            appBar: DefaultAppBarWidget(
+              title: 'تعديل بياناتك',
+              centerTitle: true,
+              notify: false,
+            ),
+            body:
+            state is LoadingState?
+            Center(child: Loading(),):
+            ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
               children: [
                 GifView.asset(
@@ -57,59 +57,56 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 20.verticalSpace,
                 CustomFormField(
                   header: "ألأسم ألأول",
-                  controller: fNameCont,
+                  controller: cubit.firstNameController,
                 ),
                 16.verticalSpace,
                 CustomFormField(
                   header: "ألأسم الأخير",
-                  controller: lNameCont,
+                  controller: cubit.lastNameController,
+                ),
+                16.verticalSpace,
+                CustomFormField(
+                  header: "اسم المستخدم",
+                  controller: cubit.fullNameController,
                 ),
                 16.verticalSpace,
                 CustomFormField(
                   header: "بريدك الألكتروني",
-                  controller: emailCont,
+                  controller: cubit.emailController,
                 ),
                 16.verticalSpace,
                 CustomFormField(
                   header: "الرقم القومي",
-                  controller: emailCont,
-                ),
-                16.verticalSpace,
-                CustomFormField(
-                  header: "كلمة المرور",
-                  controller: passwordCont,
-                  suffixIcon: Icons.visibility_off,
-                ),
-                16.verticalSpace,
-                CustomFormField(
-                  header: "تأكيد كلمة المرور",
-                  controller: passwordCont,
-                  suffixIcon: Icons.visibility_off,
+                  controller: cubit.nIdController,
+                  keyboardType: TextInputType.number,
                 ),
                 16.verticalSpace,
                 CustomFormField(
                   header: "رقم الهاتف",
-                  controller: fNameCont,
+                  controller: cubit.phoneNumberController,
+                  keyboardType: TextInputType.number,
                 ),
                 16.verticalSpace,
               ],
-            );
-          },
-        ),
-        bottomNavigationBar: BlocBuilder<AuthCubit, AuthState>(
-          builder: (context, state) {
-            return Container(
-                padding: EdgeInsets.all(16.sp),
-                child: ButtonWidget(
-                  loading: state is LoadingState,
-                  color: AppColors.blue,
-                  onPressed: () {},
-                  text: "تعديل",
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  textColor: AppColors.white,
-                ));
-          },
-        ),
+            ),
+            bottomNavigationBar: BlocBuilder<AuthCubit, AuthState>(
+              builder: (context, state) {
+                return
+                  Container(
+                    padding: EdgeInsets.all(16.sp),
+                    child: ButtonWidget(
+                      color: AppColors.blue,
+                      onPressed: () {
+                        cubit.editProfile();
+                      },
+                      text: "تعديل",
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      textColor: AppColors.white,
+                    ));
+              },
+            ),
+          );
+        },
       ),
     );
   }

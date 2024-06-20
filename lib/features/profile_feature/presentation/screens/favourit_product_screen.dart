@@ -41,16 +41,20 @@ class FavouriteProductScreen extends StatelessWidget {
                       titleColor: AppColors.black,
                       titleFontWeight: FontWeight.w500),
                 )
-                    : ListView.separated(
+                    : GridView.builder(
+              padding: EdgeInsets.all(16.sp),
                   itemCount: cubit.getHomeFavouritesModel?.favoriteProducts?.length ?? 0,
-                  reverse: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16.h,
+                    crossAxisSpacing: 16.w,
+                    childAspectRatio: 0.58,
+                  ),
                   itemBuilder: (context, index) {
                     return CustomFavProductItem(
 
                     );
                   },
-                  separatorBuilder: (context, index) =>
-                  16.horizontalSpace,
                 );
           },
         ),

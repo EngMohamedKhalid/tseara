@@ -9,11 +9,20 @@ class CacheService {
   static const String userToken = "token";
   static const String FCM_TOKEN = "FcmToken";
   static const String OLD_FCM_TOKEN = "ExpiredFcmToken";
+  static const String STRING = "userID";
   final _prefs = getIt<SharedPreferences>();
 
 
   Future<bool> setUserToken({required String token}) async {
     return _prefs.setString(userToken, "Bearer $token");
+  }
+  Future<bool> setUserId({required String Id}) async {
+    return _prefs.setString(STRING, "$Id");
+  }
+  String? getUserId(){
+    final String? token = _prefs.getString(STRING);
+    debugPrint("getting Id : $token");
+    return token;
   }
   String? getUserToken(){
     final String? token = _prefs.getString(userToken);

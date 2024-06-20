@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tseara/app/utils/helper.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/login_screen.dart';
 import 'package:tseara/features/home_feature/data/models/get_home_favourites_model.dart';
 import 'package:tseara/features/home_feature/data/models/port_model.dart';
 
@@ -8,6 +10,7 @@ import '../../../../app/services/cache_service.dart';
 import '../../../../app/utils/dio_helper.dart';
 import '../../../../app/utils/get_it_injection.dart';
 import '../../../../app/utils/navigation_helper.dart';
+import '../../../../app/widgets/custom_alert_dialog.dart';
 import '../../data/models/category_model.dart';
 
 part 'home_state.dart';
@@ -57,14 +60,19 @@ class HomeCubit extends Cubit<HomeState> {
     print("started");
     DioHelper.getData(
       url: "Account/GetCurrentUser2",
-    ).then((value) {
+    ).then((value)async {
       print(value.data);
       getHomeFavouritesModel = GetHomeFavouritesModel.fromJson(value.data);
+      print(getHomeFavouritesModel?.userId);
+      await getIt<CacheService>().setUserId(Id: getHomeFavouritesModel?.userId??"",);
       print(getHomeFavouritesModel?.favoriteProducts?.length??0);
       print("=====home fav==========");
       emit(HomeFavInitial());
     }).catchError((error) {
       print(error.toString());
+      globalAlertDialogue("انتهت مدة صالحية التسجيل",onOk: () {
+        navigateTo(LoginScreen(),removeAll: true);
+      });
       emit(HomeFavInitial());
     });
   }
