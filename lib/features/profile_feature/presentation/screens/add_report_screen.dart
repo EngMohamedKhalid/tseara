@@ -83,86 +83,96 @@ class _AddReportScreenState extends State<AddReportScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        showModalBottomSheet(
-                          context: context,
-                          builder: (context) {
-                            return Container(
-                              width: double.infinity,
-                              decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(16),
-                                    topRight: Radius.circular(16),
-                                  )
-                              ),
-                              //height: 200.h,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 20.h
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  TextWidget(
-                                    title: "chose Picture".tr(),
-                                    titleAlign: TextAlign.center,
-                                    titleSize: 20.sp,
-                                    titleColor: Colors.black,
+                    Column(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return Container(
+                                  width: double.infinity,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(16),
+                                        topRight: Radius.circular(16),
+                                      )
                                   ),
-                                  20.verticalSpace,
-                                  Row(
-                                    mainAxisAlignment : MainAxisAlignment.spaceAround,
+                                  //height: 200.h,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 20.h
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      IconButton(
-                                        onPressed:() async{
-                                          Navigator.pop(context);
-                                          await ImagePickerService.getImage(imageSource: ImageSource.camera).then((value) {
-                                            cubit.userImage = value;
-                                            if(value != null){
-                                              setState(() {
-
-                                              });
-                                            }
-                                          });
-                                        },
-                                        icon: Icon(
-                                          Icons.camera_alt_rounded,
-                                          color: Colors.black,
-                                          size:25.sp ,
-                                        ),
+                                      TextWidget(
+                                        title: "اختيار صور".tr(),
+                                        titleAlign: TextAlign.center,
+                                        titleSize: 20.sp,
+                                        titleColor: Colors.black,
                                       ),
-                                      IconButton(
-                                        onPressed:()async {
-                                          Navigator.pop(context);
-                                          await ImagePickerService.getImage(imageSource: ImageSource.gallery).then((value) {
-                                            cubit.userImage = value;
-                                            if(value != null){
-                                              setState(() {
+                                      20.verticalSpace,
+                                      Row(
+                                        mainAxisAlignment : MainAxisAlignment.spaceAround,
+                                        children: [
+                                          IconButton(
+                                            onPressed:() async{
+                                              Navigator.pop(context);
+                                              await ImagePickerService.getImage(imageSource: ImageSource.camera).then((value) {
+                                                cubit.userImage = value;
+                                                if(value != null){
+                                                  setState(() {
 
+                                                  });
+                                                }
                                               });
-                                            }
-                                          });
-                                        },
-                                        icon: Icon(
-                                          Icons.photo_library_rounded,
-                                          color: Colors.black,
-                                          size:25.sp ,
-                                        ),
-                                      ),
+                                            },
+                                            icon: Icon(
+                                              Icons.camera_alt_rounded,
+                                              color: Colors.black,
+                                              size:25.sp ,
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed:()async {
+                                              Navigator.pop(context);
+                                              await ImagePickerService.getImage(imageSource: ImageSource.gallery).then((value) {
+                                                cubit.userImage = value;
+                                                if(value != null){
+                                                  setState(() {
+
+                                                  });
+                                                }
+                                              });
+                                            },
+                                            icon: Icon(
+                                              Icons.photo_library_rounded,
+                                              color: Colors.black,
+                                              size:25.sp ,
+                                            ),
+                                          ),
+                                        ],
+                                      )
                                     ],
-                                  )
-                                ],
-                              ),
+                                  ),
+                                );
+                              },
                             );
                           },
-                        );
-                      },
-                      child: Icon(
-                        Icons.image,
-                        color: AppColors.mainColor,
-                        size: 50.sp,
-                      ),
+                          child: Icon(
+                            Icons.image,
+                            color: AppColors.mainColor,
+                            size: 50.sp,
+                          ),
+                        ),
+                        TextWidget(
+                          title: "اختار صورة",
+                          titleSize: 15.sp,
+                          titleFontWeight: FontWeight.w600,
+                          titleColor: Colors.black,
+                        ),
+                      ],
                     ),
                     50.horizontalSpace,
                     Container(
@@ -187,7 +197,8 @@ class _AddReportScreenState extends State<AddReportScreen> {
                       )
                           : TextWidget(
                         title: "لم يتم اختيار صورة",
-                        titleSize: 20.sp,
+                        titleSize: 15.sp,
+                        titleFontWeight: FontWeight.w600,
                         titleColor: Colors.black,
                       ),
                     ),

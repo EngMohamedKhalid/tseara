@@ -110,7 +110,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         "userId": await getIt<CacheService>().getUserId()
       },
     ).then((value) {
-      showToast(msg:"Added Successfully");
+      showToast(msg:value.data);
       HomeCubit.get().getHomeFavorites();
       emit(ProfileInitial());
     }).catchError((e){
