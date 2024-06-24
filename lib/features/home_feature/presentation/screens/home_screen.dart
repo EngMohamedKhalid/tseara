@@ -309,6 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               itemCount: cubit.getHomeFavouritesModel?.favoriteProducts?.length ?? 0,
                               reverse: true,
                               itemBuilder: (context, index) {
+                                print(cubit.getHomeFavouritesModel?.favoriteProducts?.length);
                                 return CustomSubCatProductItem(
                                   isFav: true,
                                   products: cubit.getHomeFavouritesModel!.favoriteProducts![index],

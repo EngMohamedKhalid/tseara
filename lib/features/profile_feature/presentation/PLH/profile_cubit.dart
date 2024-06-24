@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tseara/app/utils/dio_helper.dart';
 import 'package:tseara/app/utils/helper.dart';
 import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
@@ -31,7 +34,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final emailController = TextEditingController();
   final phoneNumberController = TextEditingController();
   final nIdController = TextEditingController();
-
+  XFile? userImage;
   void addReport(){
     emit(ProfileLoading());
     DioHelper.postWithFormData(
@@ -43,6 +46,7 @@ class ProfileCubit extends Cubit<ProfileState> {
           "PhoneNumber":phoneController.text,
           "National_Id":nationalIdController.text,
           "complaintDetails":complaintController.text,
+          "AddAtachment":userImage==null?null:File(userImage!.path),
         }),
     ).then((value) {
       showToast(msg: value.data['message']);
@@ -93,9 +97,10 @@ class ProfileCubit extends Cubit<ProfileState> {
     nIdController.clear();
     lastNameController.clear();
     firstNameController.clear();
+    userImage=null;
   }
 
-  void addToCart({required int productId})async{
+  Future<void> addToCart({required int productId})async{
     emit(ProfileLoading());
     DioHelper.postData(
       url: "FavoriteProducts/AddFavoriteProduct",
@@ -105,16 +110,17 @@ class ProfileCubit extends Cubit<ProfileState> {
         "userId": await getIt<CacheService>().getUserId()
       },
     ).then((value) {
-      showToast(msg:"Profile Updated Successfully");
+      showToast(msg:"Added Successfully");
       HomeCubit.get().getHomeFavorites();
       emit(ProfileInitial());
     }).catchError((e){
-      print(e.toString());
+      showToast(msg:"The Product Already Favorite !!");
       emit(ProfileInitial());
     });
 
   }
-  void removeFromCart({required int productId})async{
+
+  Future<void> removeFromCart({required int productId})async{
     emit(ProfileLoading());
     DioHelper.deleteData(
       url: "FavoriteProducts/DeleteProductFromFavorite",
@@ -124,7 +130,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         "userId": await getIt<CacheService>().getUserId()
       },
     ).then((value) {
-      showToast(msg:"Profile Updated Successfully");
+      showToast(msg:value.data);
       HomeCubit.get().getHomeFavorites();
       emit(ProfileInitial());
     }).catchError((e){

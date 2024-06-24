@@ -52,7 +52,7 @@ class FavouriteProductScreen extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) {
                     return CustomFavProductItem(
-
+                      product: cubit.getHomeFavouritesModel!.favoriteProducts![index],
                     );
                   },
                 );

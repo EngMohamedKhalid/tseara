@@ -48,6 +48,7 @@ class Products {
     productName = json['productName'];
     priceFrom = json['price_From'];
     priceTo = json['price_To'];
+    id = json['id'];
     lastUpdate = json['lastUpdate'];
     subCategoryName = json['subCategoryName'];
     image = json['image'];
@@ -56,6 +57,7 @@ class Products {
   String? productName;
   num? priceFrom;
   num? priceTo;
+  int? id;
   String? lastUpdate;
   String? subCategoryName;
   String? image;
@@ -66,6 +68,7 @@ class Products {
     map['productName'] = productName;
     map['price_From'] = priceFrom;
     map['price_To'] = priceTo;
+    map['id'] = id;
     map['lastUpdate'] = lastUpdate;
     map['subCategoryName'] = subCategoryName;
     map['image'] = image;

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tseara/app/utils/app_colors.dart';
+import 'package:tseara/app/utils/helper.dart';
 import 'package:tseara/app/widgets/custom_form_field.dart';
 import 'package:tseara/app/widgets/text_widget.dart';
+import 'package:tseara/features/bottom_navigation_feature/presentation/screens/bottom_navigation_screen.dart';
 import 'package:tseara/features/categories_feature/presentation/PLH/category_cubit.dart';
 
 import '../../../../app/widgets/custom_drop_down.dart';
@@ -40,6 +42,9 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
           title: widget.categoryTitle,
           centerTitle: true,
           notify: false,
+          onPop: () {
+            navigateTo(BNBScreen(),removeAll: true,);
+          },
         ),
         body: BlocBuilder<CategoryCubit, CategoryState>(
           builder: (context, state) {

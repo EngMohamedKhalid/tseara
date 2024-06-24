@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gif_view/gif_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tseara/app/widgets/loading.dart';
+import 'package:tseara/features/home_feature/presentation/PLH/home_cubit.dart';
 import 'package:tseara/features/profile_feature/presentation/PLH/profile_cubit.dart';
 
 import '../../../../app/services/cache_service.dart';
@@ -29,6 +30,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ProfileCubit.get().firstNameController.text=HomeCubit.get().getHomeFavouritesModel?.firstName??"";
+    ProfileCubit.get().lastNameController.text=HomeCubit.get().getHomeFavouritesModel?.lastName??"";
+    ProfileCubit.get().fullNameController.text=HomeCubit.get().getHomeFavouritesModel?.usreName??"";
+    ProfileCubit.get().nIdController.text=HomeCubit.get().getHomeFavouritesModel?.nationalId??"";
+    ProfileCubit.get().phoneNumberController.text=HomeCubit.get().getHomeFavouritesModel?.phoneNumber??"";
+    ProfileCubit.get().emailController.text=HomeCubit.get().getHomeFavouritesModel?.email??"";
+
+  }
   @override
   Widget build(BuildContext context) {
     return Directionality(
