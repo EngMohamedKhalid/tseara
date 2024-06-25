@@ -118,11 +118,11 @@ class AuthCubit extends Cubit<AuthState> {
   void forgetPassword(){
     emit(LoadingState());
     DioHelper.postData(
-        url: 'Account/ForgetPassword',
+        url: 'Otp/ForgetPassword',
         data:{
           "email": forgetEmailController.text,
         }).then((value) {
-        showToast(msg: "تم ارسال رسالة التحقق على البريد الالكتروني");
+        showToast(msg: value.data);
         navigateTo(ResetPasswordScreen());
       emit(AuthInitial());
     }).catchError((error) {
@@ -135,23 +135,19 @@ class AuthCubit extends Cubit<AuthState> {
   void resetPassword(){
     emit(LoadingState());
     DioHelper.postWithFormData(
-        url: 'Account/ResetPassord',
+        url: 'Otp/ResetPassord',
         data:FormData.fromMap({
           "Email": forgetEmailController.text,
-          "Token": resetTokenController.text,
+          "Code": resetTokenController.text,
           "NewPassword": resetPassController.text,
           "ConfirmPassword": resetPassController.text,
         })
     ).then((value) {
-      if(value.statusCode == 200){
-        showToast(msg: "تم تغيير كلمة المرور بنجاح");
+        showToast(msg: value.data);
         navigateTo(LoginScreen());
-      } else {
-        globalAlertDialogue(value.data["InvalidToken"].toString());
-      }
       emit(AuthInitial());
     }).catchError((error) {
-      print(error.toString());
+      globalAlertDialogue("Invalid OTP");
       emit(AuthInitial());
     });
   }

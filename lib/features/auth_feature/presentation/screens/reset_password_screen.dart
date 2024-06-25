@@ -80,8 +80,10 @@ class ResetPasswordScreen extends StatelessWidget {
                         ),
                         60.verticalSpace,
                         CustomFormField(
-                          hint: "Token From Email Link".tr(),
+                          hint: "Enter Code".tr(),
                           controller: cu.resetTokenController,
+                          keyboardType: TextInputType.number,
+                          maxLength: 6,
                         ),
                         20.verticalSpace,
                         CustomFormField(

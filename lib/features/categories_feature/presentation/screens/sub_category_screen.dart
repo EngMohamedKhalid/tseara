@@ -84,7 +84,7 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                         onItemChanged: (value) {
                           setState(() {
                             selectedValue = value;
-                            if(value=="المنتجات الغذائيه" || value=="خضراوات "){
+                            if(value=="المنتجات الغذائيه" || value=="خضراوات "|| value=="الفاكهة "){
                               isFirst =true;
                             }else{
                               isFirst =false;

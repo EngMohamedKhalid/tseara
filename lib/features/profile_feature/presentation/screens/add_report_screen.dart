@@ -65,11 +65,13 @@ class _AddReportScreenState extends State<AddReportScreen> {
                 CustomFormField(
                   hint: "التليفونِ",
                   controller: cubit.phoneController,
+                  keyboardType: TextInputType.number,
                 ),
                 16.verticalSpace,
                 CustomFormField(
                   hint: "الرقم القومي",
                   controller: cubit.nationalIdController,
+                  keyboardType: TextInputType.number,
                 ),
                 16.verticalSpace,
                 CustomFormField(

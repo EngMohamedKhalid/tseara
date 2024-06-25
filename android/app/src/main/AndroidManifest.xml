@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.INSTALL_PACKAGES"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <application
-        android:label="tseara"
+        android:label="Tseara-تسعيره"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
