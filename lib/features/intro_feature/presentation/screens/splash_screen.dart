@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tseara/features/bottom_navigation_feature/presentation/screens/bottom_navigation_screen.dart';
 import 'package:tseara/features/intro_feature/presentation/screens/get_started_screen.dart';
 
 import '../../../../app/services/cache_service.dart';
@@ -24,8 +25,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    late Widget widget;
     Future.delayed(Duration(seconds: 1),(){
-      navigateTo(GetStartedScreen(),removeAll: true);
+      if(getIt<CacheService>().getUserToken() == null){
+        widget = const GetStartedScreen();
+      }else{
+        widget = const BNBScreen();
+      }
+      navigateTo(widget,removeAll: true);
     });
   }
   @override

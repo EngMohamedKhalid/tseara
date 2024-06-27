@@ -99,7 +99,7 @@ class CategoriesScreen extends StatelessWidget {
                                                         .searchCategories?[
                                                             index]
                                                         .categoryName ??
-                                                    "حبوب و بقوليات",
+                                                    "",
                                                 titleSize: 18.sp,
                                                 titleFontWeight:
                                                     FontWeight.bold,
@@ -131,9 +131,9 @@ class CategoriesScreen extends StatelessWidget {
                                                         .searchCategories?[index]
                                                         .image ??
                                                     "assets/images/cat.png",
-                                                width: 150.w,
+                                                width: 100.w,
                                                 fit: BoxFit.fill,
-                                                height: 200.h,
+                                                height: 150.h,
                                               ),
                                             ),
                                           ),

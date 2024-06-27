@@ -21,6 +21,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
   List<SubCategoryModel> ?subCategories;
   List<SubCategoryModel> ?subCategoriesSearch;
+  List<Products> ?searchProducts;
   List<String?> ? titles;
 
   void getCategories() {
@@ -88,6 +89,21 @@ class CategoryCubit extends Cubit<CategoryState> {
      });
     }
     subCategoriesSearch = result;
+    emit(CategoryInitial());
+  }
+
+  void searchProduct({required String searchKey}){
+    emit(CategorySearchLoading());
+    List<Products>? result=[];
+    if(searchKey.isEmpty){
+      result = subCategories?[0].products;
+      emit(CategoryInitial());
+    }else{
+      result = subCategories?[0].products?.where((element) {
+        return  element.productName!.toLowerCase().contains(searchKey.toLowerCase());
+      }).toList();
+    }
+    searchProducts = result;
     emit(CategoryInitial());
   }
 }

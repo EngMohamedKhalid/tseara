@@ -73,6 +73,16 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                   //   ],
                   // ),
                   12.verticalSpace,
+                  CustomFormField(
+                    hint: 'ابحث',
+                    align: TextAlign.start,
+                    prefixIcon: Icons.search,
+                    onChange: (value) {
+                      CategoryCubit.get()
+                          .searchSubCategory(searchKey: value);
+                    },
+                  ),
+                  16.verticalSpace,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -114,13 +124,20 @@ class _SubCategoryScreenState extends State<SubCategoryScreen> {
                   Expanded(
                     child:
                         isFirst?
+                        cubit.subCategoriesSearch![0].products?.length==0?
+                        Center(child: TextWidget(
+                          title: "لا يوجد منتجات",
+                          titleColor: AppColors.black,
+                          titleSize: 20.sp,
+                          titleFontWeight: FontWeight.bold,
+                        ),):
                     GridView.builder(
                       itemCount: cubit.subCategoriesSearch?[0].products?.length??0,
                       // shrinkWrap: true,
                       // physics: NeverScrollableScrollPhysics(),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        childAspectRatio: 0.57,
+                        childAspectRatio: 0.5,
                         mainAxisSpacing: 20.sp,
                         crossAxisSpacing: 20.sp,
                       ),

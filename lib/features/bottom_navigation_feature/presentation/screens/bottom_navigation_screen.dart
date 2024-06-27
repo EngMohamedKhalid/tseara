@@ -40,10 +40,14 @@ class _BNBScreenState extends State<BNBScreen> {
               ImageWidget(
                   imageUrl: "assets/images/Categorize.png",
                  color: Colors.white,
+                width: 37.w,
+                height: 37.h,
               ),
               ImageWidget(
                   imageUrl: "assets/images/report.png",
                  color: Colors.white,
+                width: 37.w,
+                height: 37.h,
               ),
               Icon(
                 Icons.person,
