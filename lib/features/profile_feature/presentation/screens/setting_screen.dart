@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tseara/features/auth_feature/presentation/presentation_logic_holder/auth_cubit.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/login_screen.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/register_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/screens/all_ports_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/screens/favourit_product_screen.dart';
 import 'package:tseara/features/profile_feature/presentation/screens/profile_screen.dart';
@@ -47,6 +49,8 @@ class _SettingScreenState extends State<SettingScreen> {
             child: Column(
               children: [
                 50.verticalSpace,
+                getIt<CacheService>().getUserToken() == null?
+                const SizedBox():
                 Row(
                   children: [
                     ButtonWidget(
@@ -75,6 +79,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                 ),
                 20.verticalSpace,
+                getIt<CacheService>().getUserToken() == null?
+                const SizedBox():
                 TextWidget(
                   title:  getIt<CacheService>().getUserData()?.userName ?? "",
                   titleSize: 20.sp,
@@ -83,6 +89,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   titleFontWeight: FontWeight.bold,
                 ),
                 10.verticalSpace,
+                getIt<CacheService>().getUserToken() == null?
+                const SizedBox():
                 TextWidget(
                   title:
                   getIt<CacheService>().getUserData()?.email ?? "",
@@ -91,6 +99,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   titleColor: AppColors.white,
                   titleFontWeight: AppFonts.bold600,
                 ),
+                getIt<CacheService>().getUserToken() == null?
+                SizedBox(height: 300.h,):
                 80.verticalSpace,
                 Container(
                   padding:
@@ -100,7 +110,33 @@ class _SettingScreenState extends State<SettingScreen> {
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Column(
-                    children: [
+                    children:
+                    [
+                      getIt<CacheService>().getUserToken() == null?
+                  InkWell(
+                    onTap: () {
+                      navigateTo(LoginScreen(),removeAll: true);
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(16.sp),
+                      decoration: BoxDecoration(
+                        color: AppColors.gery4.withOpacity(.09),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextWidget(
+                            title: "تسجيل الدخول",
+                            titleColor: AppColors.black,
+                          ),
+                          10.horizontalSpace,
+                          Icon(Icons.login, size: 30.sp,color: AppColors.mainColor,)
+                        ],
+                      ),
+                    ),
+                  )
+                          :
                       InkWell(
                         onTap: () {
                           navigateTo(AllPortsScreen());
@@ -125,6 +161,31 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
                       20.verticalSpace,
+                      getIt<CacheService>().getUserToken() == null?
+                      InkWell(
+                        onTap: () {
+                          navigateTo(RegisterScreen(),removeAll: true,);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(16.sp),
+                          decoration: BoxDecoration(
+                            color: AppColors.gery4.withOpacity(.09),
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              TextWidget(
+                                title: "انشاء حساب",
+                                titleColor: AppColors.black,
+                              ),
+                              10.horizontalSpace,
+                              Icon(Icons.login, size: 30.sp,color: AppColors.mainColor,)
+                            ],
+                          ),
+                        ),
+                      )
+                          :
                       InkWell(
                         onTap: () {
                           navigateTo(FavouriteProductScreen());
@@ -152,6 +213,8 @@ class _SettingScreenState extends State<SettingScreen> {
                         ),
                       ),
                       20.verticalSpace,
+                      getIt<CacheService>().getUserToken() == null?
+                      const SizedBox():
                       InkWell(
                         onTap: () {
                           globalAlertDialogue("Do you want to logout?",

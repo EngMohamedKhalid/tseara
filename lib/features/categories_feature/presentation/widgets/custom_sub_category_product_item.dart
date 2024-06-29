@@ -10,6 +10,8 @@ import 'package:tseara/features/bottom_navigation_feature/presentation/screens/b
 import 'package:tseara/features/categories_feature/data/models/sub_category_model.dart';
 import 'package:tseara/features/profile_feature/presentation/screens/add_report_screen.dart';
 
+import '../../../../app/services/cache_service.dart';
+import '../../../../app/utils/get_it_injection.dart';
 import '../../../../app/widgets/text_widget.dart';
 import '../../../profile_feature/presentation/PLH/profile_cubit.dart';
 class CustomSubCatProductItem extends StatefulWidget {
@@ -40,6 +42,8 @@ class _CustomSubCatProductItemState extends State<CustomSubCatProductItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  getIt<CacheService>().getUserToken() == null?
+                      0.verticalSpace:
                   InkWell(
                     onTap:widget.isFav? () {
                       print(widget.products.id);

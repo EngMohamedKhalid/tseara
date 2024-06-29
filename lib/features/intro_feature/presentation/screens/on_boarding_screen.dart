@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:tseara/features/auth_feature/presentation/screens/choose_screen.dart';
 import 'package:tseara/features/auth_feature/presentation/screens/login_screen.dart';
 
 import '../../../../app/utils/app_colors.dart';
@@ -76,7 +77,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               if(currentIndex != 2){
                 controller.jumpToPage(currentIndex + 1);
               }else{
-                navigateTo(const LoginScreen(),replace: true);
+                navigateTo(const ChooseScreen(),replace: true);
               }
 
             },
@@ -86,7 +87,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ButtonWidget(
             horizontalMargin: 50.w,
             onPressed: () {
-              navigateTo(LoginScreen(), replace: true);
+              navigateTo(ChooseScreen(), replace: true);
             },
             color: AppColors.geryB3B3B3,
             textColor: AppColors.black,

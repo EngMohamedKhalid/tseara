@@ -280,6 +280,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
           30.verticalSpace,
+          getIt<CacheService>().getUserToken() == null?
+          const SizedBox():
           CustomHomeRowItem(
             name: "منتجاتك المفضلة",
             onTap: () {
@@ -287,6 +289,8 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           ),
           30.verticalSpace,
+          getIt<CacheService>().getUserToken() == null?
+              0.verticalSpace:
           BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
               var cubit = HomeCubit.get();

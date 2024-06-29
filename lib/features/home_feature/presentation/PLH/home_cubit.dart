@@ -70,6 +70,8 @@ class HomeCubit extends Cubit<HomeState> {
       emit(HomeFavInitial());
     }).catchError((error) {
       print(error.toString());
+      getIt<CacheService>().getUserToken() == null?
+      null:
       globalAlertDialogue("انتهت مدة صالحية التسجيل",onOk: () {
         navigateTo(LoginScreen(),removeAll: true);
       });
